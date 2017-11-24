@@ -7,6 +7,7 @@
 		<script src="https://haocity.github.io/Hmusic.js/dist/hmusic.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 		<script src="js/hco.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/marked.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<header>
@@ -67,6 +68,17 @@
 		</div>-->
 		
 		<script type="text/javascript">
+			let loada=`<div id="fountainG">
+	<div id="fountainG_1" class="fountainG"></div>
+	<div id="fountainG_2" class="fountainG"></div>
+	<div id="fountainG_3" class="fountainG"></div>
+	<div id="fountainG_4" class="fountainG"></div>
+	<div id="fountainG_5" class="fountainG"></div>
+	<div id="fountainG_6" class="fountainG"></div>
+	<div id="fountainG_7" class="fountainG"></div>
+	<div id="fountainG_8" class="fountainG"></div>
+</div>`;
+
   function xhr(url, method='GET', data=null) {
     return new Promise(function(res, rej) {
       try {
@@ -84,8 +96,8 @@
     })
   }
   
-  function loadpage(i){
-	xhr('json/p'+i+'.json').then(function(t){
+  function loadpage(i,j){
+	xhr('http://127.0.0.1:5230/page?s='+i+'&e='+j).then(function(t){
 	  	let json=JSON.parse(t);
 	  	if(json.code==200){
 	  		console.log("加载成功");
@@ -93,19 +105,23 @@
 	  		let warp=document.querySelector('.container')
 	  		for (let i = 0; i < data.length; i++) {
 	  			let t=data[i]
-	  			warp.appendChild(creatpost(t.title,t.briefly,t.time,t.classify,t.commentsnumber,t.like,t.pid))
+	  			if(!t.commentsnumber){
+	  				t.commentsnumber=""
+	  			}
+	  			warp.appendChild(creatpost(t.title,t.briefly,t.time,t.classify,t.commentsnumber,t.love,t.pid))
 	  		}
 	  	}
 	  })
 	}
   
   function loadone(e){
-  	xhr('json/'+e.pid+'.json').then(function(t){
+  	xhr('http://127.0.0.1:5230/post?id='+e.pid).then(function(t){
 	  	let json=JSON.parse(t);
 	  	if(json.code==200){
 	  		let p=e.querySelector(".post-con")
 	  		p.className="post-con all";
-	  		p.innerHTML=json.data;
+	  		p.onclick="";
+	  		p.innerHTML=marked(json.data);
 	  		e.querySelector(".post-showall-btn").style.display='none'
 	  	}
 	  })
@@ -131,7 +147,7 @@
   	let ele=document.createElement('div');
   	ele.className="box post";
   	ele.innerHTML=`<h2 class="title">${a}</h2>
-				<div class="post-con small">${b}</div>
+				<div class="post-con small" onclick="loadone(this.parentNode)">${marked(b)}</div>
 				<div class="post-showall-btn pointer">阅读全文 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-down"></use></svg></div>
 				<div class="post-bottom">
 					<div class="post-bottom-time">发表于${gettime(c)}</div>
@@ -184,14 +200,10 @@
 		}else if(ele.classList.contains("post-showall-btn")){
 			loadone(ele.parentNode);
 		}
-	}else if(ele.classList.contains("small")){
-			loadone(ele.parentNode);
 	}
-  	
-  	
   })
   
-  loadpage(1)
+  loadpage(0,10)
 		</script>
 	</body>
 </html>

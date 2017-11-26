@@ -66,7 +66,34 @@ http.createServer(function(req, res){
             db.end();
             console.log('关闭连接');
           });
+   }else if(path=="/love"&&getobj.id){
+   	 handleConnect();
+     console.log('添加id: '+getobj.id+'的喜欢');
+     db.query("UPDATE `cityblog`.`post` SET `love` =`love`+1 WHERE `post`.`pid` = "+parseInt(getobj.id), function(err, rows, fields) {
+     if (err){
+      res.end('{"code":0}');
+     }
+     res.end('{"code":200}');
+     db.end();
+     console.log('关闭连接');
+      });
+   }else if(path=="/one"&&getobj.id){
+   	handleConnect();
+   	console.log('文章: '+getobj.id);
+   	db.query('SELECT `pid`,`time`,`love`,`classify`,`title`,`content` FROM `post` WHERE pid='+ db.escape(getobj.id), function(err, rows, fields) {
+           if (err){
+              res.end('{"code":0}');
+            }
+           	rows=rows[0];
+           	rows.code=200;
+           	rows.data=rows.content;
+           	delete rows.content;
+            res.end(JSON.stringify(rows));
+            db.end();
+            console.log('关闭连接');
+          });
+   	
    }else{
       res.end('{"code":0,"data":"参数错误￣□￣｜｜"}');
    }
-}).listen(5230);
+}).listen(5280);

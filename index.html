@@ -4,16 +4,16 @@
 		<meta charset="utf-8" />
 		<title>TOWN BLOG</title>
 		<script src="https://at.alicdn.com/t/font_464467_n309tpndqj6vfgvi.js" type="text/javascript" charset="utf-8"></script>
-		<script src="https://haocity.github.io/Hmusic.js/dist/hmusic.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<script src="js/hco.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/marked.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/main.js" async="async" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<header>
 			<nav class="main-width">
 				<div class="logo">
-					<a href="#">HAOTOWN</a>
+					<a href="index.html">HAOTOWN</a>
 				</div>
 				<div class="nav">
 					<li><a href="https://ali.haotown.cn/">首页</a></li>
@@ -49,7 +49,7 @@
 				</div>
 				<footer >
 					© 2017 HAOTOWN-疯狂减肥带<br />
-					蜀ICP备12021840号-1
+					鲁ICP备15029864号
 				</footer>
 			</div>
 			
@@ -58,6 +58,7 @@
 			</div>
 			
 		</div>
+		<div class="footer">本站由 <a href="#">NewCityBolg</a>强力驱动 鲁ICP备15029864号</div>
 		<!--<div class="hco-login">
 			<div class="hco-login-title">登录</div>
 			<input type="text" class="hl-author" placeholder="用户名"/>
@@ -66,144 +67,6 @@
 			<input type="button" class="hl-login"  value="确认"/>
 			<div class="hco-login-close">×</div>
 		</div>-->
-		
-		<script type="text/javascript">
-			let loada=`<div id="fountainG">
-	<div id="fountainG_1" class="fountainG"></div>
-	<div id="fountainG_2" class="fountainG"></div>
-	<div id="fountainG_3" class="fountainG"></div>
-	<div id="fountainG_4" class="fountainG"></div>
-	<div id="fountainG_5" class="fountainG"></div>
-	<div id="fountainG_6" class="fountainG"></div>
-	<div id="fountainG_7" class="fountainG"></div>
-	<div id="fountainG_8" class="fountainG"></div>
-</div>`;
-
-  function xhr(url, method='GET', data=null) {
-    return new Promise(function(res, rej) {
-      try {
-        let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            res(xhr.responseText)
-          } else if(xhr.readyState == 4) {
-            rej(xhr.status)
-          }
-        }
-        xhr.open(method, url, true)
-        xhr.send(data)
-      } catch(e) {}
-    })
-  }
-  
-  function loadpage(i,j){
-	xhr('http://127.0.0.1:5230/page?s='+i+'&e='+j).then(function(t){
-	  	let json=JSON.parse(t);
-	  	if(json.code==200){
-	  		console.log("加载成功");
-	  		let data=json.data;
-	  		let warp=document.querySelector('.container')
-	  		for (let i = 0; i < data.length; i++) {
-	  			let t=data[i]
-	  			if(!t.commentsnumber){
-	  				t.commentsnumber=""
-	  			}
-	  			warp.appendChild(creatpost(t.title,t.briefly,t.time,t.classify,t.commentsnumber,t.love,t.pid))
-	  		}
-	  	}
-	  })
-	}
-  
-  function loadone(e){
-  	xhr('http://127.0.0.1:5230/post?id='+e.pid).then(function(t){
-	  	let json=JSON.parse(t);
-	  	if(json.code==200){
-	  		let p=e.querySelector(".post-con")
-	  		p.className="post-con all";
-	  		p.onclick="";
-	  		p.innerHTML=marked(json.data);
-	  		e.querySelector(".post-showall-btn").style.display='none'
-	  	}
-	  })
-  }
-  
-  
-  function opencom(e){
-  	let c=e.querySelector('.post-ex');
-  	if(e.hco){
-  		c.innerHTML="";
-  		e.hco=false
-  	}else{
-  		
-  		new Hco(c,'blog',e.pid);
-  		e.hco=true;
-  	}
-  	
-  	
-  	
-  	
-  }
-  function creatpost(a,b,c,d,e,f,g){
-  	let ele=document.createElement('div');
-  	ele.className="box post";
-  	ele.innerHTML=`<h2 class="title">${a}</h2>
-				<div class="post-con small" onclick="loadone(this.parentNode)">${marked(b)}</div>
-				<div class="post-showall-btn pointer">阅读全文 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-down"></use></svg></div>
-				<div class="post-bottom">
-					<div class="post-bottom-time">发表于${gettime(c)}</div>
-					<div class="post-bottom-classify"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-icon-class"></use></svg>分类:${d}</div>
-					<div class="post-bottom-comnum pointer"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>${e}评论</div>
-					<div class="post-bottom-love pointer"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-love1"></use></svg>${f}喜欢</div>
-					<div class="post-bottom-share pointer"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-share"></use></svg>分享</div>
-				</div>
-				<div class="post-ex"></div>
-				`
-	ele.pid=g;
-	return ele;
-  }
-  function gettime(time){
-  	let temp;
-	const nowtime=new Date().getTime();
-	let timed=nowtime-time;
-	if(timed<60000){
-		temp='刚刚';
-	}else if(timed<60000*60){
-		temp=new Date(timed).getMinutes()+'分钟前';
-	}else if(timed<60000*60*24){
-		temp=new Date(timed).getHours()+'小时前';
-	}else{
-		let t=new Date(parseInt(time));
-		temp=t.getFullYear()+'年'+(t.getMonth()+1)+'月'+t.getDate()+'日'
-	}
-	return temp;
-  }
- 
-  
-  //事件
-  document.querySelector('.container').addEventListener('click',function(e){
-	let ele=e.target;
-	if(ele.nodeName=="use"){
-		ele=ele.parentNode
-	}
-	if(ele.nodeName=="svg"){
-		ele=ele.parentNode
-	}
-	if(ele.classList.contains("pointer")){
-		if(ele.classList.contains("post-bottom-comnum")){
-			//评论
-			opencom(ele.parentNode.parentNode)
-		}else if(ele.classList.contains("post-bottom-love")){
-			//喜欢
-			
-		}else if(ele.classList.contains("post-bottom-share")){
-			//分享
-		}else if(ele.classList.contains("post-showall-btn")){
-			loadone(ele.parentNode);
-		}
-	}
-  })
-  
-  loadpage(0,10)
-		</script>
+	
 	</body>
 </html>

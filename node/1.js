@@ -51,11 +51,15 @@ http.createServer(function(req, res){
           });
    	}else if(path=="/page"&&getobj.s){
           handleConnect();
+          let ex="";
           if(!getobj.e){
           	getobj.e=getobj.s+10;
           }
+          if(getobj.class){
+          	ex=' WHERE `classify`='+db.escape(getobj.class);
+          }
           console.log('查询页面: '+getobj.s+'至'+getobj.e);
-          let sql='SELECT * FROM `post` ORDER BY `post`.`pid` DESC limit '+ parseInt(getobj.s)+','+ parseInt(getobj.e)
+          let sql='SELECT * FROM `post`'+ex+' ORDER BY `post`.`pid` DESC limit '+ parseInt(getobj.s)+','+ parseInt(getobj.e)
           db.query(sql, function(err, rows, fields) {
           if (err){
               res.end('{"code":0，"data":"数据库查询失败"}');
@@ -80,7 +84,7 @@ http.createServer(function(req, res){
    }else if(path=="/one"&&getobj.id){
    	handleConnect();
    	console.log('文章: '+getobj.id);
-   	db.query('SELECT `pid`,`time`,`love`,`classify`,`title`,`content` FROM `post` WHERE pid='+ db.escape(getobj.id), function(err, rows, fields) {
+   	db.query('SELECT `pid`,`time`,`love`,`classify`,`title`,`content`,`md` FROM `post` WHERE pid='+ db.escape(getobj.id), function(err, rows, fields) {
            if (err){
               res.end('{"code":0}');
             }

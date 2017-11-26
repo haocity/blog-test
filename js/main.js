@@ -1,5 +1,6 @@
 let city=new Object;
 
+
 function init(){
 	city.api="https://t5.haotown.cn/blogapi/";
 	if(localStorage.getItem('love')){
@@ -11,14 +12,36 @@ function init(){
 	city.s=0;
 	city.e=city.s+city.loadp;
 	city.footer=document.querySelector('.footer');
+	creatul();
 	
 	if(getQueryString("pid")){
 		loadallone(getQueryString("pid"));
 	}else if(getQueryString("class")){
-		
+		city.class=escape(getQueryString("class"));
+		loadpage(city.s, city.e);
 	}else{
 		loadpage(city.s, city.e);
 	}
+}
+function creatul(){
+	let arr=["首页","日常","技术","软件"];
+	let warp=document.createElement('div');
+	warp.className='nav';
+	for (let i = 0; i < arr.length; i++) {
+		let li=document.createElement('li');
+		let a=document.createElement('a');
+		if(arr[i]=="首页"){
+			a.href="index.html";
+		}else{
+			a.href=`index.html?class=${arr[i]}`;
+		}
+		a.innerText=arr[i];
+		a.title=arr[i];
+		li.appendChild(a);
+		warp.appendChild(li);
+	}
+	document.querySelector("nav.main-width").appendChild(warp);
+	
 }
 function uplove(i){
 	city.love.push(i);
@@ -52,7 +75,11 @@ function islove(pid){
   }
   
   function loadpage(i,j,callback){
-	xhr(city.api+'page?s='+i+'&e='+j).then(function(t){
+  	let ex="";
+  	if(city.class){
+  		ex="&class="+city.class
+  	}
+	xhr(city.api+'page?s='+i+'&e='+j+ex).then(function(t){
 	  	let json=JSON.parse(t);
 	  	if(json.code==200){
 	  		console.log("加载成功");
@@ -63,7 +90,7 @@ function islove(pid){
 	  			if(!t.commentsnumber){
 	  				t.commentsnumber=""
 	  			}
-	  			warp.appendChild(creatpost(t.title,t.briefly,t.time,t.classify,t.commentsnumber,t.love,t.pid));
+	  			warp.appendChild(creatpost(t.title,t.briefly,t.time,t.classify,t.commentsnumber,t.love,t.pid,null,t.md));
 	  			if(callback){callback();}
 	  		}
 	  		if(data.length!=city.loadp){
@@ -81,7 +108,12 @@ function islove(pid){
 		    let p = e.querySelector(".post-con");
 		    p.className = "post-con all";
 		    p.onclick = "";
-		    p.innerHTML = marked(json.data);
+		    if(e.md){
+		    	p.innerHTML = marked(json.data);
+		    }else{
+		    	p.innerHTML = json.data;
+		    }
+		   
 		    e.querySelector(".post-showall-btn").style.display = 'none'
 		}
 	})
@@ -96,7 +128,7 @@ function loadallone(pid){
 		city.isend='true';
 		city.footer.style.display='block';
 		let warp=document.querySelector('.container ');
-		let ec=creatpost(j.title,j.data,j.time,j.classify,j.commentsnumber,j.love,j.pid,"all");
+		let ec=creatpost(j.title,j.data,j.time,j.classify,j.commentsnumber,j.love,j.pid,"all",j.md);
 		warp.appendChild(ec);
 		opencom(ec);
 	})
@@ -120,16 +152,22 @@ function getQueryString(name) {
     if (r != null) return unescape(r[2]); return null;
 }
 
-function creatpost(a, b, c, d, e, f, g,h) {
+function creatpost(a, b, c, d, e, f, g,h,i) {
     let ele = document.createElement('div');
-    let post;
+    let post,postcon;
     if(islove(g)){
     	f="已";
     }
-    if(h&&h=="all"){
-    	post=`<div class="post-con all">${marked(b)}</div>`
+    if(i){
+    	postcon=marked(b);
+    	ele.md=true;
     }else{
-    	post=`<div class="post-con small" onclick="loadone(this.parentNode)">${marked(b)}</div>
+    	postcon=b;
+    }
+    if(h&&h=="all"){
+    	post=`<div class="post-con all">${postcon}</div>`
+    }else{
+    	post=`<div class="post-con small" onclick="loadone(this.parentNode)">${postcon}</div>
 				<div class="post-showall-btn pointer">阅读全文 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-down"></use></svg></div>`
     }
     ele.className = "box post";

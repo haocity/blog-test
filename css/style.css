@@ -1,3 +1,16 @@
+  html {
+    height: 100%;
+	}
+body{
+    margin: 0;
+    font-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;
+		position: relative;
+		min-height: 100%;
+		box-sizing: border-box;
+		padding: 0 0 61px 0; 
+    }
+
+  
   .icon {
 		       width: 1em; height: 1em;
 		       vertical-align: -0.15em;
@@ -9,7 +22,7 @@
 				font-size: 16px;
 				background-color: #f3f3f3;
 			}
-			body,p,ul,li,h1, h2, h3, h4, h5, h6{
+			p,ul,li,h1, h2, h3, h4, h5, h6{
 				margin: 0;
 				padding: 0;
 			}
@@ -129,6 +142,9 @@
 			.container-warp>.container>.post>.small img:first-child{
 				float: left;
 			}
+			.container-warp>.container>.post>.post-con img{
+				max-width: 100%;
+			}
 			.container-warp>.container>.post>.post-bottom{
 				margin: 10px 2px;
 				overflow: hidden;
@@ -149,7 +165,7 @@
 			.container-warp>.container>.post>.post-showall-btn {
 		    position: absolute;
 		    right: 27px;
-		    top: 132px;
+		    top: 171px;
 		    color: #3b9bf1;
 		    padding-left: 20px;
 		    background-color: #FFFFFF;
@@ -278,13 +294,18 @@
     padding: 20px 0;
     margin-top: 20px;
     display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width:100%;
+
 }
 .footer>a{
 	color: #908f8f;
 }
 
 //md
-.container-warp>.container>.post>.post-con blockquote {
+blockquote{
     padding-left: 18px;
     margin: 0;
     border-left: 6px solid #eeeeee;
@@ -305,4 +326,16 @@
 }
 .container-warp>.container>.post>.post-con pre>code{
 	 background-color: transparent;
+}
+.look,.look>a {
+    color: #fff!important;
+    text-decoration: none;
+}
+.look {
+    margin: 10px 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #d07878;
+    box-shadow: 1px 1px 5px #b5b5b5;
+    text-align: center;
 }

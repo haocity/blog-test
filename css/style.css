@@ -139,7 +139,11 @@ body{
 			.container-warp>.container>.post>.small:hover{
 				 color: #6f6f6f;
 			}
-			.container-warp>.container>.post>.small img:first-child{
+			.container-warp>.container>.post>.small img{
+				display: none;
+			}
+			.container-warp>.container>.post>.small>p:first-child>img:first-child{
+				display: inherit;
 				float: left;
 			}
 			.container-warp>.container>.post>.post-con img{
@@ -338,4 +342,27 @@ blockquote{
     background-color: #d07878;
     box-shadow: 1px 1px 5px #b5b5b5;
     text-align: center;
+}
+@media only screen and (min-width:300px ) and (max-width:700px) {
+	.main-width {
+	  width: 90%;
+	}
+	.container-right{
+		display: none;
+	}
+}
+@media only screen and (min-width:700px ) and (max-width:1200px) {
+	.main-width {
+	  width: 90%;
+	}
+}
+@media only screen and (min-width:1400px ) {
+	.main-width {
+	  width: 1200px;
+	}
+}
+@media only screen and (min-width:1600px ) {
+	.main-width {
+	  width: 1400px;
+	}
 }

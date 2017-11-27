@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>LINK</title>
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	</head>
+	<body>
+		<style type="text/css">
+		body{
+
+			font-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.header,.main{
+			color: #fff;
+			padding: 0 40px;
+		}
+		.header{
+			background-color: rgba(47, 46, 46, 0.8);
+		}
+		.header>h2{
+			margin: 0;
+			padding: 0;
+			line-height: 60px;
+		}
+		.header>.home>a{
+			color: #fff;
+			text-decoration: none;
+		}
+		.header>.home>a:hover{
+			border-bottom: 1px solid #fff;
+		}
+		.main{
+			padding-top: 20px;
+			background-color: rgba(0,0,0,0.4)
+		}
+		.friend-link{
+			position: relative;
+			width: 160px;
+			height: 200px;
+    		overflow: hidden;
+			display: inline-block;
+			text-align: center;
+			color: #fff;
+			margin: 4px 16px;
+			text-decoration: none;
+			box-shadow: 0 0 15px 0 rgba(70, 70, 70, 0.3);
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+		.friend-link>.portrait{
+				height: 80px;
+				width: 80px;
+				margin: 20px auto 20px auto;
+				background-image:url(https://q.qlogo.cn/g?b=qq&nk=501971583&s=100);
+				background-color: #fff;
+				border-radius: 50%;
+				background-size: 90px;
+				background-position: center;
+			}
+		.friend-link:after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				width: 0;
+				border-bottom: 3px solid #fff;
+				transition: all linear 0.5s;
+		}
+			
+		.friend-link:hover {
+			color: #fff;
+			background-color: #797979d4;
+		}
+		.friend-link:hover:after {
+				left: 0;
+				width: 100%;
+				transition: all linear 0.5s;
+		}
+		.home{
+			float: right;
+		}
+		.none{
+			display: none;
+		}
+		@media (max-width: 640px) {
+			.header{
+				width:100%
+				padding:0 5px;
+			}
+			.main{
+				padding:0;
+				width:200px;
+				margin:0 auto;
+			}
+		}
+		</style>
+		<div class="header"><h2 class="home"><a href="https://www.haotown.cn">HOME</a></h2><h2>真是厉害的Friends呢!</h2></div>
+		<div class="main">
+			<a href="https://bobiji.com/" target="_blank" class="friend-link none"><div class="portrait"></div><div class="tlink">bobo</div>A simple boy</a>
+			<a href="http://qwq.moe/" target="_blank"  class="friend-link" ><div class="portrait" style="background-image: url(https://q.qlogo.cn/g?b=qq&nk=1335173664&s=100);"></div><div class="tlink">贫穷的蚊子</div>每天早上被穷醒是怎样一种体验？</a>
+			<a href="https://imjad.cn/" target="_blank"  class="friend-link"><div class="portrait" style="background-image: url(https://q.qlogo.cn/g?b=qq&nk=610527187&s=100);"></div><div class="tlink">JAD</div>JAD大佬很可爱的哦</a>
+			<a href="http://mireas.com/" target="_blank" class="friend-link none"><div class="portrait" style="background-image: url(https://q.qlogo.cn/g?b=qq&nk=420290239&s=100);"></div><div class="tlink">Miracle</div>体味心安理得，惯于离经叛道中</a>
+		</div>
+		<script type="text/javascript">
+			var OneImg=new Object;
+			OneImg.id=Math.round(Math.random() *6534);
+			document.querySelector('body').style.backgroundImage="url(https://t4.haotown.cn/img/bj@"+OneImg.id+".jpg)";
+			document.querySelector('.main').style.minHeight=document.documentElement.clientHeight-80+'px'
+			
+		</script>
+	</body>
+</html>

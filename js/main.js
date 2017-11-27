@@ -24,14 +24,14 @@ function init(){
 	}
 }
 function creatul(){
-	let arr=["首页","日常","技术","软件"];
+	let arr=["首页","index.html","日常",,"技术",,"软件",,"友链","link.html"];
 	let warp=document.createElement('div');
 	warp.className='nav';
-	for (let i = 0; i < arr.length; i++) {
+	for (let i = 0; i < arr.length; i+=2) {
 		let li=document.createElement('li');
 		let a=document.createElement('a');
-		if(arr[i]=="首页"){
-			a.href="index.html";
+		if(arr[i+1]){
+			a.href=arr[i+1];
 		}else{
 			a.href=`index.html?class=${arr[i]}`;
 		}

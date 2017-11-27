@@ -5,7 +5,6 @@
 		<meta charset="UTF-8">
 		<title>LINK</title>
 		 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 	</head>
 	<body>
 		<style type="text/css">
@@ -14,6 +13,8 @@
 			font-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;
 			margin: 0;
 			padding: 0;
+			background-size: cover;
+			background-position: center;
 		}
 		
 		.header,.main{
@@ -85,17 +86,22 @@
 			float: right;
 		}
 		.none{
-			display: none;
+			display: none!important;
 		}
-		@media (max-width: 640px) {
+		@media (max-width: 440px) {
 			.header{
 				width:100%
 				padding:0 5px;
 			}
 			.main{
 				padding:0;
-				width:200px;
+				width:100%;
 				margin:0 auto;
+			}
+			.main>a{
+				margin: 0 auto;
+			    width: 160px;
+			    display: block;
 			}
 		}
 		</style>

@@ -1,13 +1,21 @@
+import "babel-polyfill";
+import marked from "./marked.js"
+import "./hco.js"
+require('isomorphic-fetch');
+
+const fetch=window.fetch;
 let city=new Object;
-
-
+console.log('load');
 function init(){
+	console.log('load2');
 	city.api="https://t5.haotown.cn/blogapi/";
-	if(localStorage.getItem('love')){
+	
+	if(localStorage&&localStorage.getItem('love')){
 		city.love=JSON.parse(localStorage.getItem('love'));
 	}else{
 		city.love=new Array;
 	}
+
 	city.loadp=10;
 	city.s=0;
 	city.e=city.s+city.loadp;
@@ -17,8 +25,9 @@ function init(){
 	if(getQueryString("pid")){
 		loadallone(getQueryString("pid"));
 	}else if(getQueryString("class")){
-		city.class=escape(getQueryString("class"));
-		loadpage(city.s, city.e);
+		city.class=getQueryString("class")
+		console.log(city.class)
+		loadpage(city.s, city.e)
 	}else{
 		loadpage(city.s, city.e);
 	}
@@ -57,30 +66,16 @@ function islove(pid){
 	return false;
 }
 
-  function xhr(url, method='GET', data=null) {
-    return new Promise(function(res, rej) {
-      try {
-        let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            res(xhr.responseText)
-          } else if(xhr.readyState == 4) {
-            rej(xhr.status)
-          }
-        }
-        xhr.open(method, url, true)
-        xhr.send(data)
-      } catch(e) {}
-    })
-  }
-  
   function loadpage(i,j,callback){
   	let ex="";
   	if(city.class){
   		ex="&class="+city.class
   	}
-	xhr(city.api+'page?s='+i+'&e='+j+ex).then(function(t){
-	  	let json=JSON.parse(t);
+  	let url=city.api+'page?s='+i+'&e='+j+ex;
+	fetch(url).then(function(response) {
+        return response.json();
+    }).then(function(json) {
+
 	  	if(json.code==200){
 	  		console.log("加载成功");
 	  		let data=json.data;
@@ -102,8 +97,9 @@ function islove(pid){
 	}
   
   function loadone(e){
-  	xhr(city.api+'post?id='+e.pid).then(function(t){
-		let json = JSON.parse(t);
+  	fetch(city.api+'post?id='+e.pid).then(function(response) {
+        return response.json();
+    }).then(function(json) {
 		if (json.code == 200) {
 		    let p = e.querySelector(".post-con");
 		    p.className = "post-con all";
@@ -120,15 +116,16 @@ function islove(pid){
   }
 
 function loadallone(pid){
-	xhr(city.api+'one?id='+pid).then(function(t){
-		let j=JSON.parse(t);
-		if(!j.commentsnumber){
-	  		j.commentsnumber=""
+	fetch(city.api+'one?id='+pid).then(function(response) {
+        return response.json();
+    }).then(function(json) {
+		if(!json.commentsnumber){
+	  		json.commentsnumber=""
 	  	}
 		city.isend='true';
 		city.footer.style.display='block';
 		let warp=document.querySelector('.container ');
-		let ec=creatpost(j.title,j.data,j.time,j.classify,j.commentsnumber,j.love,j.pid,"all",j.md);
+		let ec=creatpost(json.title,json.data,json.time,json.classify,json.commentsnumber,json.love,json.pid,"all",json.md);
 		warp.appendChild(ec);
 		opencom(ec);
 	})
@@ -149,7 +146,15 @@ function opencom(e) {
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]); return null;
+    if (r != null){
+    	console.log(r[2])
+    	if(!!window.ActiveXObject || "ActiveXObject" in window){
+    		return encodeURI(r[2])
+    	}else{
+    		return r[2]
+    	}
+    }	
+    return null;
 }
 
 function creatpost(a, b, c, d, e, f, g,h,i) {
@@ -167,7 +172,7 @@ function creatpost(a, b, c, d, e, f, g,h,i) {
     if(h&&h=="all"){
     	post=`<div class="post-con all">${postcon}</div>`
     }else{
-    	post=`<div class="post-con small" onclick="loadone(this.parentNode)">${postcon}</div>
+    	post=`<div class="post-con small" >${postcon}</div>
 				<div class="post-showall-btn pointer">阅读全文 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-down"></use></svg></div>`
     }
     ele.className = "box post";
@@ -183,6 +188,9 @@ function creatpost(a, b, c, d, e, f, g,h,i) {
 				<div class="post-ex"></div>
 				`
 	ele.pid=g;
+	if(h!=="all"){
+		ele.querySelector('.post-con.small').addEventListener('click',function(){loadone(this.parentNode)});
+	}
 	return ele;
   }
 

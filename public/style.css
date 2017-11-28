@@ -8,20 +8,17 @@ body{
 		min-height: 100%;
 		box-sizing: border-box;
 		padding: 0 0 61px 0; 
+		font-size: 16px;
+		background-color: #f3f3f3;
     }
 
-  
-  .icon {
-		       width: 1em; height: 1em;
-		       vertical-align: -0.15em;
-		       fill: currentColor;
-		       overflow: hidden;
-		    }
-			body{
-				font-family: "微软雅黑";
-				font-size: 16px;
-				background-color: #f3f3f3;
-			}
+.icon {
+	width: 1em; height: 1em;
+	vertical-align: -0.15em;
+	fill: currentColor;
+	overflow: hidden;
+}
+			
 			p,ul,li,h1, h2, h3, h4, h5, h6{
 				margin: 0;
 				padding: 0;
@@ -251,8 +248,8 @@ body{
     background-color: #fdfdfd;
     border: 1px solid #d6d0d0;
     border-radius: 16px;
-    background: url("./img/banner.jpg") left top no-repeat #fff;
-		background-size: contain;
+   /* background: url("./img/banner.jpg") left top no-repeat #fff;
+		background-size: contain;*/
 }
 .hco-login-title {
     margin-top: 40px;

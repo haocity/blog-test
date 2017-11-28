@@ -1,0 +1,28 @@
+{
+  "name": "Newcity",
+  "version": "2.2.0",
+  "description": "a node blog",
+  "main": "build webpack",
+  "dependencies": {
+    "es6-promise": "^4.1.1",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.4",
+    "webpack": "^2.6.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^0.11.1",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.8"
+  },
+  "scripts": {
+    "buid": "webpack -p",
+    "dev": "webpack"
+  },
+  "author": "",
+  "license": "ISC"
+}

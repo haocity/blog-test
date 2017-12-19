@@ -382,6 +382,9 @@ blockquote{
 	.container-right{
 		display: none;
 	}
+	.container-warp>.container>.post>.post-showall-btn{
+		display: none;
+	}
 }
 @media only screen and (min-width:700px ) and (max-width:1200px) {
 	.main-width {

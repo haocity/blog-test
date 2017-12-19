@@ -5,10 +5,17 @@ require('isomorphic-fetch');
 
 const fetch=window.fetch;
 let city=new Object;
+city.copy=document.querySelector(".h-copy")
+city.copy.t=city.copy.querySelector('textarea')
+
+city.share=document.querySelector(".h-share")
+city.share.wb=city.share.querySelector(".wb")
+city.share.qr=city.share.querySelector(".qr")
 console.log('load');
 function init(){
 	console.log('load2');
-	city.api="https://t5.haotown.cn/blogapi/";
+	city.api="https://t5.haotown.cn/blogapi/"
+	city.url='http://www.haotown.cn/'
 	
 	if(localStorage&&localStorage.getItem('love')){
 		city.love=JSON.parse(localStorage.getItem('love'));
@@ -33,7 +40,7 @@ function init(){
 	}
 }
 function creatul(){
-	let arr=["首页","index.html","日常",,"技术",,"软件",,"友链","link.html"];
+	let arr=["首页","index.html","日常",,"技术",,"软件",,"友链","link.html","应用中心","https://app.haotown.cn"];
 	let warp=document.createElement('div');
 	warp.className='nav';
 	for (let i = 0; i < arr.length; i+=2) {
@@ -241,12 +248,20 @@ function creatpost(a, b, c, d, e, f, g,h,i) {
                     ele.love = true;
                     ele.querySelector('span').innerHTML = '已喜欢';
                     uplove(ele.parentNode.parentNode.pid);
-                    xhr(city.api+"love?id=" + ele.parentNode.parentNode.pid).then(function(t) {
+                    fetch(city.api+"love?id=" + ele.parentNode.parentNode.pid).then(function(t) {
                         console.log(t)
                     })
                 }
             } else if (ele.classList.contains("post-bottom-share")) {
                 //分享
+                let url=city.url+"?pid="+ele.parentNode.parentNode.pid;
+                let title="疯狂减肥带-"+ele.parentNode.parentNode.querySelector(".title>a").innerText;
+                city.copy.t.value=url;
+                city.share.wb.href=`http://s.share.baidu.com/?click=1&url=${url}&uid=0&to=tsina&type=text&pic=&title=${title}&key=&desc=&comment=&relateUid=&searchPic=0&sign=on&l=1c1n207cd1c1n208bl1c1n20ste&linkid=jbdfo64647k&firstime=1513671457197`
+                city.share.qr.src=`https://app.haotown.cn/qr/?url=${url}&&size=3`
+                city.share.style.top=e.y+document.documentElement.scrollTop-20+'px'
+                city.share.style.left=e.x+document.documentElement.scrollLeft-20+'px'
+                city.share.style.display='block'
             } else if (ele.classList.contains("post-showall-btn")) {
                 loadone(ele.parentNode);
             }
@@ -266,4 +281,17 @@ function creatpost(a, b, c, d, e, f, g,h,i) {
   		}
   	}
   })
-	init();
+  
+  //copy
+  
+  city.copy.addEventListener('click',function(){
+  	this.t.innerHTML=this.s;
+  	this.t.select();
+    document.execCommand("Copy");
+  })
+  city.share.onmouseleave=function(){
+  	this.style.display='none'
+  }
+  
+  
+init();

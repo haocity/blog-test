@@ -340,6 +340,41 @@ blockquote{
     box-shadow: 1px 1px 5px #b5b5b5;
     text-align: center;
 }
+.h-share {
+		display: none;
+    position: absolute;
+    width: 120px;
+    -webkit-box-shadow: 0 5px 20px rgba(0,34,77,.1);
+    box-shadow: 0 5px 20px rgba(0,34,77,.1);
+    background-color: #FFFFFF;
+    text-align: center;
+    padding: 10px 8px;
+}
+.h-share>.qr{
+	min-height: 100px;
+}
+.h-share>a {
+		font-size: 16px;
+    color: #4e4d4d;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 4px 0;
+}
+.h-share>a:active{
+	background-color: rgba(0,0,0,0.2);
+}
+.h-share>a>.icon{
+	padding-right: 4px;
+	font-size: 18px;
+}
+.h-copy>.h-copy-text{
+	width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+}
 @media only screen and (min-width:300px ) and (max-width:700px) {
 	.main-width {
 	  width: 90%;

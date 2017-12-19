@@ -1,9 +1,13 @@
-var path = require('path');
+
 module.exports = {
   entry: './app/main.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    path:  __dirname + "/public"
+  },devServer: {
+    contentBase: "./public",
+    historyApiFallback: true,
+    inline: true
   },module: {
         rules:[
             {
